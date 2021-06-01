@@ -7,6 +7,7 @@
 #include <ctime>
 
 #define TAMCONTA 100
+#define TOTALMESA 20
 
 // Variavel Global
 int indiceMesa = 0;
@@ -64,6 +65,7 @@ float lerCardapio(char *pNomePizza){
 }
 
 void cadastrarConta(){
+  int codigo = 0;
   // data / hora atual com base no sistema atual
   time_t tempo = time(0);
   // converter a variavel now para a forma de string
@@ -101,20 +103,22 @@ void cadastrarConta(){
 }
 
 void pesquisarCodigoDaMesa(){
-  int codigoMesa = 0;
+  int codigoMesa = 1;
   int contador;
-
+  
   printf("\n\tPesquisa sobre a Mesa\nCodigo da mesa:_ ");
   scanf("%d", &codigoMesa);
-  for (contador = 0; contador <= indiceMesa; contador++){
-    if (codigoMesa == conta[contador].codigoMesa){
-      printf("-------\nPedido ~ %sMesa-> %d\nPizza-> %sPreco-> %2.f\nDescricao-> %s-------\n",
-        conta[contador].data, conta[contador].codigoMesa, conta[contador].nomePizza, 
-        conta[contador].valor, conta[contador].descricao
-      );
-    } else if ((codigoMesa < 0) or (codigoMesa > indiceMesa)) {
-      printf("\nO codigo inserido eh invalido.\n\n");
+  if ((codigoMesa >= 1) and (codigoMesa < TOTALMESA)) {
+    for (contador = 0; contador <= indiceMesa; contador++){
+      if (codigoMesa == conta[contador].codigoMesa){
+        printf("-------\nPedido ~ %sMesa-> %d\nPizza-> %sPreco-> %2.f\nDescricao-> %s-------\n",
+          conta[contador].data, conta[contador].codigoMesa, conta[contador].nomePizza, 
+          conta[contador].valor, conta[contador].descricao
+        );
+      }
     }
+  } else {
+    printf("\nO codigo inserido eh invalido.\n\n");
   }
 }
 
