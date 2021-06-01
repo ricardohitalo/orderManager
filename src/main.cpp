@@ -12,7 +12,7 @@ int main(){
       "| 3 | Historico de Pedidos \n"
       "| 4 | Sair \n\n"
     );
-    printf("OP:_ "); scanf("%d", &opcao);
+    printf("Selecionar:_ "); scanf("%d", &opcao);
 
     switch (opcao) {
       case 1:

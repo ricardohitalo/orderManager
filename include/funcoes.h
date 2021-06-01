@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <ctime>
 
 #define TAMCONTA 100
 
@@ -12,11 +13,11 @@ int indiceMesa = 0;
 FILE *pArquivo;
 
 typedef struct Conta{
+  int codigoMesa;
+  float valor;
   char nomePizza[100];
   char descricao[100];
-  float valor;
-  int codigoMesa;
-  int dia, mes, ano;
+  char data[100];
 } contaMesa;
 
 contaMesa conta[TAMCONTA];
@@ -28,7 +29,7 @@ typedef struct Pizza{
 
 cardapio pizza[TAMCONTA];
 
-void lerCardapio(char *pNomePizza){
+float lerCardapio(char *pNomePizza){
   char contLinha[100];
   char *leitura;
   int contL;
@@ -51,8 +52,7 @@ void lerCardapio(char *pNomePizza){
           strcpy(pizza[contPizza].nome, contLinha);
           verdade = 0;
         } else if (verdade == 0) {
-          pizza[contPizza].preco = strtod(contLinha, NULL);
-          printf("\n\nPizza: %s, Preco: %2.f", pizza[contPizza].nome, pizza[contPizza].preco);
+          return pizza[contPizza].preco = strtod(contLinha, NULL);
           break;
         }
         contPizza++;
@@ -64,29 +64,32 @@ void lerCardapio(char *pNomePizza){
 }
 
 void cadastrarConta(){
-  printf("\n Codigo da mesa:_ ");
+  // data / hora atual com base no sistema atual
+  time_t tempo = time(0);
+  // converter a variavel now para a forma de string
+  char* data = ctime(&tempo);
+  // setar data na conta
+  strcpy(conta[indiceMesa].data, data);
+
+  printf("\n_Codigo da mesa: ");
   scanf("%d", &conta[indiceMesa].codigoMesa);
-  printf("\n Nome da pizza:_ ");
+  printf("_Pizza e Tamanho (ex: calabresa g):\n_ ");
   getchar();
   fgets(conta[indiceMesa].nomePizza, 100, stdin);
-  printf("\nDescricao do pedido: ");
-  getchar();
+  printf("_Descricao: ");
   fgets(conta[indiceMesa].descricao, 100, stdin);
 
-  lerCardapio(conta[indiceMesa].nomePizza);
+  // Verificar pizza e registrar na conta.
+  conta[indiceMesa].valor = lerCardapio(conta[indiceMesa].nomePizza);
 
-  if (indiceMesa == 0){
-    pArquivo = fopen("pedidos.txt", "w");
-  } else {
-    pArquivo = fopen("pedidos.txt", "a");
-  }
-
+  pArquivo = fopen("pedidos.txt", "a+");
   if (pArquivo == NULL) {
     printf("Erro ao salvar arquivo.");
     exit(1);
   } else {
-    fprintf(pArquivo, "Pedido: \nPizza-> %s\nDescricao-> %s",
-      conta[indiceMesa].nomePizza, conta[indiceMesa].descricao
+    fprintf(pArquivo, "-------\nPedido ~ %sMesa-> %d\nPizza-> %sPreco-> %2.f\nDescricao-> %s-------",
+      conta[indiceMesa].data, conta[indiceMesa].codigoMesa, conta[indiceMesa].nomePizza, 
+      conta[indiceMesa].valor, conta[indiceMesa].descricao
     );
     fclose(pArquivo);
   }
@@ -105,11 +108,11 @@ void pesquisarCodigoDaMesa(){
   scanf("%d", &codigoMesa);
   for (contador = 0; contador <= indiceMesa; contador++){
     if (codigoMesa == conta[contador].codigoMesa){
-      printf("----\n\tPedido: \nPizza-> %s\nDescricao-> %s----\n\n\n", 
-        conta[contador].nomePizza, conta[contador].descricao
+      printf("-------\nPedido ~ %sMesa-> %d\nPizza-> %sPreco-> %2.f\nDescricao-> %s-------\n",
+        conta[contador].data, conta[contador].codigoMesa, conta[contador].nomePizza, 
+        conta[contador].valor, conta[contador].descricao
       );
-      break;
-    } else if (contador == indiceMesa) {
+    } else if ((contador < 0) or (contador > indiceMesa)) {
       printf("\nO codigo inserido eh invalido.\n\n");
     }
   }
@@ -136,6 +139,7 @@ void exibirHistoricoDePedidos(){
         linha++;
       }
     }
+    printf("\n\n");
     fclose(pArquivo);
   }
 }
