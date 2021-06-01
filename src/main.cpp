@@ -3,16 +3,23 @@
 int main(){
   int opcao;
 
-  printf("\t\tBem vindos ao IfoodItz\n\n");
+  printf("\t\t BEM VINDO AO 1TZF00D3\n\n");
 
   do {
     printf(
-      "| 1 | Cadastrar conta \n"
-      "| 2 | Pesquisa por Mesa \n"
-      "| 3 | Historico de Pedidos \n"
-      "| 4 | Sair \n\n"
+      "\t\t+---+----------------+\n"
+      "\t\t| 1 | Novo Pedido    |\n"
+      "\t\t+---+----------------+\n"
+      "\t\t| 2 | Mesas          |\n"
+      "\t\t+---+----------------+\n"
+      "\t\t| 3 | Fechar Pedido  |\n"
+      "\t\t+---+----------------+\n"
+      "\t\t| 4 | Historico      |\n"
+      "\t\t+---+----------------+\n"
+      "\t\t| 5 | Sair           |\n"
+      "\t\t+---+----------------+\n\n"
     );
-    printf("Selecionar:_ "); scanf("%d", &opcao);
+    printf("OPÇÃO DESEJADA ==> "); scanf("%d", &opcao);
 
     switch (opcao) {
       case 1:
