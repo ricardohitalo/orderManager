@@ -30,7 +30,7 @@ typedef struct Pizza{
 
 cardapio pizza[TAMCONTA];
 
-float lerCardapio(char *pNomePizza){
+void lerCardapio(char *pNomePizza){
   char contLinha[100];
   char *leitura;
   int contL;
@@ -53,7 +53,7 @@ float lerCardapio(char *pNomePizza){
           strcpy(pizza[contPizza].nome, contLinha);
           verdade = 0;
         } else if (verdade == 0) {
-          return pizza[contPizza].preco = strtod(contLinha, NULL);
+          pizza[contPizza].preco = strtod(contLinha, NULL);
           break;
         }
         contPizza++;
@@ -65,7 +65,6 @@ float lerCardapio(char *pNomePizza){
 }
 
 void cadastrarConta(){
-  int codigo = 0;
   // data / hora atual com base no sistema atual
   time_t tempo = time(0);
   // converter a variavel now para a forma de string
@@ -82,7 +81,8 @@ void cadastrarConta(){
   fgets(conta[indiceMesa].descricao, 100, stdin);
 
   // Verificar pizza e registrar na conta.
-  conta[indiceMesa].valor = lerCardapio(conta[indiceMesa].nomePizza);
+  lerCardapio(conta[indiceMesa].nomePizza);
+  conta[indiceMesa].valor = pizza[1].preco;
 
   pArquivo = fopen("pedidos.txt", "a+");
   if (pArquivo == NULL) {
