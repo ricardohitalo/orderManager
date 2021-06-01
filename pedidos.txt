@@ -1,3 +1,0 @@
-Pedido: 
-cod: 0
-descricao: alabresa p
