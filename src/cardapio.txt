@@ -1,0 +1,18 @@
+calabresa p
+20
+calabresa m
+35
+calabresa g
+50
+portuguesa p
+25
+portuguesa m
+35
+portuguesa g
+50
+muçarela p
+25
+muçarela m
+35
+muçarela g
+50
