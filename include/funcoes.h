@@ -112,7 +112,7 @@ void pesquisarCodigoDaMesa(){
         conta[contador].data, conta[contador].codigoMesa, conta[contador].nomePizza, 
         conta[contador].valor, conta[contador].descricao
       );
-    } else if ((contador < 0) or (contador > indiceMesa)) {
+    } else if ((codigoMesa < 0) or (codigoMesa > indiceMesa)) {
       printf("\nO codigo inserido eh invalido.\n\n");
     }
   }
