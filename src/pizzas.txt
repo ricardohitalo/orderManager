@@ -16,3 +16,5 @@ muçarela m
 35
 muçarela g
 50
+chocolate
+60.00
